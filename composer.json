@@ -1,0 +1,6 @@
+{
+    "name": "mediathekview/flapi",
+    "license": "GPL-3.0",
+    "description": "FilmListe-API fuer MediathekView",
+    "require": {}
+}
