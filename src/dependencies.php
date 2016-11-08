@@ -12,9 +12,9 @@ $container['renderer'] = function (\Interop\Container\ContainerInterface $c): \S
 // monolog
 $container['logger'] = function (\Interop\Container\ContainerInterface $c): \Monolog\Logger {
     $settings = $c->get('settings')['logger'];
-    $logger = new Monolog\Logger($settings['name']);
-    $logger->pushProcessor(new Monolog\Processor\UidProcessor());
-    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+    $logger = new \Monolog\Logger($settings['name']);
+    $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
+    $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
 
