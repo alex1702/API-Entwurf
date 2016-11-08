@@ -4,7 +4,7 @@
 git clone git@github.com:mediathekview/FLAPI.git FLAPI
 cd FLAPI
 composer install
-cd public && php -S localhost:8080
+composer start
 ```
 
 [localhost:8080](http://localhost:8080/MediathekView)
