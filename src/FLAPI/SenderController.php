@@ -24,7 +24,17 @@ class SenderController {
 	/**
 	 * @var \Illuminate\Database\Query\Builder
 	 */
-	protected $table;
+	protected $senderTable;
+
+	/**
+	 * @var \Illuminate\Database\Query\Builder
+	 */
+	protected $sendungenTable;
+
+	/**
+	 * @var \Illuminate\Database\Query\Builder
+	 */
+	protected $downloadTable;
 
 	/**
 	 * @param \Interop\Container\ContainerInterface $ci
@@ -32,7 +42,9 @@ class SenderController {
 	 */
 	public function __construct(\Interop\Container\ContainerInterface $ci, \Illuminate\Database\Capsule\Manager $db) {
 		$this->ci = $ci;
-		$this->table = $db->table('sender');
+		$this->senderTable = $db->table('sender');
+		$this->sendungenTable = $db->table('sendungen');
+		$this->downloadTable = $db->table('download');
 		$this->db = $db;
 	}
 
@@ -51,9 +63,9 @@ class SenderController {
 		} else {
 			$format = $queryParams['format'];
 		}
-		$senderData = $this->table->get(['name', 'abbr'])->toArray();
+		$senderData = $this->senderTable->get(['name', 'abbr'])->toArray();
 		foreach($senderData as &$sender) {
-			$sender->url = $this->ci->get('router')->pathFor('sender-all', [
+			$sender->url = $this->ci->get('router')->pathFor('senderFull', [
 				'abbr' => $sender->abbr
 			]);
 		}
@@ -65,7 +77,7 @@ class SenderController {
 	}
 
 	/**
-	 * Route-method for /sender/
+	 * Route-method for /sender/{abbr}
 	 *
 	 * @param \Psr\Http\Message\ServerRequestInterface $request
 	 * @param \Psr\Http\Message\ResponseInterface $response
@@ -79,8 +91,74 @@ class SenderController {
 		} else {
 			$format = $queryParams['format'];
 		}
-		// TODO: functionality
-		echo "Test";
-		return $response;
+		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
+		if(!isset($senderId[0]->id)) {
+			throw new \Exception('Sender not found!');
+		}
+		$sendungen = $this->sendungenTable->where('sender', '=', $senderId[0]->id)->get(['title', 'date', 'length', 'id'])->toArray();
+		foreach($sendungen as &$sendung) {
+			$sendung->date = strtotime($sendung->date);
+			$sendung->length = $this->timeToSec($sendung->length);
+			$sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
+			unset($sendung->id);
+		}
+		if($format == "json") {
+			return $response->withJSON($sendungen, 200);
+		} else {
+			throw new \Exception('Data format not available!');
+		}
+	}
+
+	/**
+	 * Route-method for /sender/{abbr}/{timeframe}
+	 *
+	 * @param \Psr\Http\Message\ServerRequestInterface $request
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 * @param array $args
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function getSenderSpecialData(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$queryParams = $request->getQueryParams();
+		if(!isset($queryParams['format'])) {
+			$format = "json";
+		} else {
+			$format = $queryParams['format'];
+		}
+		list($start, $end) = $this->parseTimeframe($args['timeframe']);
+		//TODO: add more logic... @jankal
+		if($format == "json") {
+			return $response->withJSON($sendungen, 200);
+		} else {
+			throw new \Exception('Data format not available!');
+		}
+	}
+
+	/**
+	 * Method for converting MySQL time to seconds
+	 *
+	 * @param string $time
+	 * @return int
+	 */
+	private function timeToSec(string $time): int {
+		$sec = 0;
+		foreach (array_reverse(explode(':', $time)) as $k => $v) {
+			$sec += pow(60, $k) * $v;
+		}
+		return $sec;
+	}
+
+	/**
+	 * Mathod for parsing the user-given timeframe from the URL to a start and end
+	 *
+	 * @param string $timeframe
+	 * @return array
+	 */
+	private function parseTimeframe(string $timeframe): array {
+		$regex = '/(\d+)([td])(\d+)/';
+		preg_match($regex, $timeframe, $matches);
+		$method = $matches[2];
+		$start = $matches[1];
+		$end = $matches[3];
+		//TODO: calculation! @jankal
 	}
 }

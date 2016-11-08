@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 08. Nov 2016 um 21:30
+-- Erstellungszeit: 08. Nov 2016 um 21:46
 -- Server-Version: 10.1.13-MariaDB
 -- PHP-Version: 7.0.6
 
@@ -30,17 +30,18 @@ DROP TABLE IF EXISTS `download`;
 CREATE TABLE `download` (
   `id` int(11) NOT NULL,
   `sendung` int(11) NOT NULL,
-  `url` text NOT NULL
+  `url` text NOT NULL,
+  `quality` enum('HD','HQ','SD') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `download`
 --
 
-INSERT INTO `download` (`id`, `sendung`, `url`) VALUES
-(1, 1, 'http://mediathekview.de/testsendung-sd.mp4'),
-(2, 1, 'http://mediathekview.de/testsendung-hq.mp4'),
-(3, 1, 'http://mediathekview.de/testsendung-hd.mp4');
+INSERT INTO `download` (`id`, `sendung`, `url`, `quality`) VALUES
+(1, 1, 'http://mediathekview.de/testsendung-sd.mp4', 'SD'),
+(2, 1, 'http://mediathekview.de/testsendung-hq.mp4', 'HQ'),
+(3, 1, 'http://mediathekview.de/testsendung-hd.mp4', 'HD');
 
 -- --------------------------------------------------------
 
