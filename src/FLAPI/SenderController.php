@@ -51,10 +51,9 @@ class SenderController {
 		} else {
 			$format = $queryParams['format'];
 		}
-		$senderData = $this->table->get(['name'])->toArray();
-		$filter = new DataFilter((array) $senderData);
+		$senderData = $this->table->get(['name', 'abbr'])->toArray();
 		if($format == "json") {
-			return $response->withJSON($filter->eachKey('name'), 200);
+			return $response->withJSON($senderData, 200);
 		} else {
 			throw new \Exception('Data format not available!');
 		}

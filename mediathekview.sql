@@ -29,16 +29,17 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `sender`;
 CREATE TABLE `sender` (
   `id` int(11) NOT NULL,
-  `name` varchar(35) NOT NULL
+  `name` varchar(35) NOT NULL,
+  `abbr` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `sender`
 --
 
-INSERT INTO `sender` (`id`, `name`) VALUES
-(1, 'zdfneo'),
-(2, 'arte');
+INSERT INTO `sender` (`id`, `name`, `abbr`) VALUES
+(1, 'ZDFneo', 'zdfneo'),
+(2, 'arte', 'arte');
 
 --
 -- Indizes der exportierten Tabellen
