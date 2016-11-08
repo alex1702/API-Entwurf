@@ -52,6 +52,11 @@ class SenderController {
 			$format = $queryParams['format'];
 		}
 		$senderData = $this->table->get(['name', 'abbr'])->toArray();
+		foreach($senderData as &$sender) {
+			$sender->url = $this->ci->get('router')->pathFor('sender-all', [
+				'abbr' => $sender->abbr
+			]);
+		}
 		if($format == "json") {
 			return $response->withJSON($senderData, 200);
 		} else {
