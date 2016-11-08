@@ -110,6 +110,30 @@ class SenderController {
 	}
 
 	/**
+	 * Route-method for /sender/{abbr}/{timeframe}
+	 *
+	 * @param \Psr\Http\Message\ServerRequestInterface $request
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 * @param array $args
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function getSenderSpecialData(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$queryParams = $request->getQueryParams();
+		if(!isset($queryParams['format'])) {
+			$format = "json";
+		} else {
+			$format = $queryParams['format'];
+		}
+		list($start, $end) = $this->parseTimeframe($args['timeframe']);
+		//TODO: add more logic... @jankal
+		if($format == "json") {
+			return $response->withJSON($sendungen, 200);
+		} else {
+			throw new \Exception('Data format not available!');
+		}
+	}
+
+	/**
 	 * Method for converting MySQL time to seconds
 	 *
 	 * @param string $time
@@ -121,5 +145,20 @@ class SenderController {
 			$sec += pow(60, $k) * $v;
 		}
 		return $sec;
+	}
+
+	/**
+	 * Mathod for parsing the user-given timeframe from the URL to a start and end
+	 *
+	 * @param string $timeframe
+	 * @return array
+	 */
+	private function parseTimeframe(string $timeframe): array {
+		$regex = '/(\d+)([td])(\d+)/';
+		preg_match($regex, $timeframe, $matches);
+		$method = $matches[2];
+		$start = $matches[1];
+		$end = $matches[3];
+		//TODO: calculation! @jankal
 	}
 }
