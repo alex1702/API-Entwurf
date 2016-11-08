@@ -4,13 +4,13 @@
 $container = $app->getContainer();
 
 // view renderer
-$container['renderer'] = function ($c) {
+$container['renderer'] = function (\Interop\Container\ContainerInterface $c): \Slim\Views\PhpRenderer {
     $settings = $c->get('settings')['renderer'];
     return new Slim\Views\PhpRenderer($settings['template_path']);
 };
 
 // monolog
-$container['logger'] = function ($c) {
+$container['logger'] = function (\Interop\Container\ContainerInterface $c): \Monolog\Logger {
     $settings = $c->get('settings')['logger'];
     $logger = new Monolog\Logger($settings['name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
@@ -19,7 +19,7 @@ $container['logger'] = function ($c) {
 };
 
 // Service factory for the ORM
-$container['db'] = function ($container) {
+$container['db'] = function (\Interop\Container\ContainerInterface $container): \Illuminate\Database\Capsule\Manager {
     $capsule = new \Illuminate\Database\Capsule\Manager;
     $capsule->addConnection($container['settings']['db']);
 
@@ -30,7 +30,7 @@ $container['db'] = function ($container) {
 };
 
 // How a new SenderController should be made
-$container[\FLAPI\SenderController::class] = function ($c) {
+$container[\FLAPI\SenderController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\SenderController {
     $db = $c->get('db');
     return new \FLAPI\SenderController($c, $db);
 };
