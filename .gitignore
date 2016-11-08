@@ -1,1 +1,4 @@
 /vendor/
+/logs/app.log
+/.env
+/.phpintel
