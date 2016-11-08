@@ -63,4 +63,24 @@ class SenderController {
 			throw new \Exception('Data format not available!');
 		}
 	}
+
+	/**
+	 * Route-method for /sender/
+	 *
+	 * @param \Psr\Http\Message\ServerRequestInterface $request
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 * @param array $args
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function getSenderAllData(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$queryParams = $request->getQueryParams();
+		if(!isset($queryParams['format'])) {
+			$format = "json";
+		} else {
+			$format = $queryParams['format'];
+		}
+		// TODO: functionality
+		echo "Test";
+		return $response;
+	}
 }
