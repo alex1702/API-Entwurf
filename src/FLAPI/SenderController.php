@@ -32,6 +32,11 @@ class SenderController {
 	protected $sendungenTable;
 
 	/**
+	 * @var \Illuminate\Database\Query\Builder
+	 */
+	protected $downloadTable;
+
+	/**
 	 * @param \Interop\Container\ContainerInterface $ci
 	 * @param \Illuminate\Database\Capsule\Manager $db
 	 */
@@ -39,6 +44,7 @@ class SenderController {
 		$this->ci = $ci;
 		$this->senderTable = $db->table('sender');
 		$this->sendungenTable = $db->table('sendungen');
+		$this->downloadTable = $db->table('download');
 		$this->db = $db;
 	}
 
@@ -89,10 +95,12 @@ class SenderController {
 		if(!isset($senderId[0]->id)) {
 			throw new \Exception('Sender not found!');
 		}
-		$sendungen = $this->sendungenTable->where('id', '=', $senderId[0]->id)->get(['title', 'date', 'length'])->toArray();
+		$sendungen = $this->sendungenTable->where('sender', '=', $senderId[0]->id)->get(['title', 'date', 'length', 'id'])->toArray();
 		foreach($sendungen as &$sendung) {
 			$sendung->date = strtotime($sendung->date);
 			$sendung->length = $this->timeToSec($sendung->length);
+			$sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
+			unset($sendung->id);
 		}
 		if($format == "json") {
 			return $response->withJSON($sendungen, 200);
