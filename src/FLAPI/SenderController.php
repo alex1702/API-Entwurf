@@ -39,10 +39,10 @@ class SenderController {
 	/**
 	 * Route-method for /sender/
 	 *
-	 * @param Psr\Http\Message\ServerRequestInterface $request
-	 * @param Psr\Http\Message\ResponseInterface $response
+	 * @param \Psr\Http\Message\ServerRequestInterface $request
+	 * @param \Psr\Http\Message\ResponseInterface $response
 	 * @param array $args
-	 * @return Psr\Http\Message\ResponseInterface
+	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function getSenderliste(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$queryParams = $request->getQueryParams();
