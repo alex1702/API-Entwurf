@@ -124,8 +124,20 @@ class SenderController {
 		} else {
 			$format = $queryParams['format'];
 		}
+		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
+		if(!isset($senderId[0]->id)) {
+			throw new \Exception('Sender not found!');
+		}
 		list($start, $end) = $this->parseTimeframe($args['timeframe']);
-		//TODO: add more logic... @jankal
+		$sqlStart = date("Y-m-d H:i:s", $start);
+		$sqlEnd = date("Y-m-d H:i:s", $end);
+		$sendungen = $this->sendungenTable->where('sender', '=', $senderId[0]->id)->whereDate('date', '>=', $sqlStart)->whereDate('date', '<=', $sqlEnd)->get(['title', 'date', 'length', 'id'])->toArray();
+		foreach($sendungen as &$sendung) {
+			$sendung->date = strtotime($sendung->date);
+			$sendung->length = $this->timeToSec($sendung->length);
+			$sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
+			unset($sendung->id);
+		}
 		if($format == "json") {
 			return $response->withJSON($sendungen, 200);
 		} else {
