@@ -1,0 +1,13 @@
+{
+  "name": "FLAPI",
+  "version": "0.1.0",
+  "description": "FilmListenAPI für MediathekView",
+  "title": "FLAPI - Docs",
+  "header": {
+    "title": "FLAPI - FilmListeAPI"
+  },
+  "template": {
+    "withCompare": true,
+    "withGenerator": true
+  }
+}
