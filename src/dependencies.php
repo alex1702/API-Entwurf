@@ -34,3 +34,9 @@ $container[\FLAPI\SenderController::class] = function (\Interop\Container\Contai
     $db = $c->get('db');
     return new \FLAPI\SenderController($c, $db);
 };
+
+// How a new SendungController should be made
+$container[\FLAPI\SendungController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\SendungController {
+    $db = $c->get('db');
+    return new \FLAPI\SendungController($c, $db);
+};
