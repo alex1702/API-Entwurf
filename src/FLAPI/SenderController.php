@@ -159,6 +159,19 @@ class SenderController {
 		$method = $matches[2];
 		$start = $matches[1];
 		$end = $matches[3];
-		//TODO: calculation! @jankal
+		switch($method) {
+			case "t":
+			break;
+
+			case "d":
+			$start = time() - ($start * 86400);
+			$end = ($end * 86400) + time();
+			break;
+
+			default:
+			throw new \Exception('Timeframe-type not supported!');
+			break;
+		}
+		return [(int) $start, (int) $end];
 	}
 }
