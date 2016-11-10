@@ -51,36 +51,6 @@ class SenderController {
 	/**
 	 * Route-method for /sender
 	 *
-	 * @api {get} /sender?format=:format Request list of available stations
-	 * @apiVersion 0.1.0
-	 * @apiName GetAvailableStations
-	 * @apiGroup Stations
-	 *
-	 * @apiParam {String} format The format you wish to receive the data in [json, xml]
-	 *
-	 * @apiSuccess {Object[]} sender The stations details
-	 * @apiSuccess {String} sender.name  Full name of the station
-	 * @apiSuccess {String} sender.abbr Abbreviation for the stations name
-	 * @apiSuccess {String} sender.url URL to GET the full list of shows on that station
-	 *
-	 * @apiSuccessExample Success-Response:
-	 *     HTTP/1.1 200 OK
-	 *     [
-	 *       {
-	 *          "name": "ZDFneo",
-	 *          "abbr": "zdfneo",
-	 *          "url": "/sender/zdfneo"
-	 *       },
-	 *       {
-	 *          "name": "arteDE",
-	 *          "abbr": "arte",
-	 *          "url": "/sender/arte"
-	 *       }
-	 *    ]
-	 *
-	 * @apiExample {curl} Example usage:
-	 *     curl -i http://localhost:8080/sender/
-	 *
 	 * @param \Psr\Http\Message\ServerRequestInterface $request
 	 * @param \Psr\Http\Message\ResponseInterface $response
 	 * @param array $args
