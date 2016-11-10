@@ -9,11 +9,18 @@ composer start
 ```
 
 ## Documentation
+### REST
 ```
 npm install apidoc -g
 composer docs
 ```
 Docs werden dann in `docs/` gespeichert.
+
+###PHP
+```
+composer api-docs
+```
+Docs werden dann in `docs/api/` gespeichert.
 
 [localhost:8080](http://localhost:8080/MediathekView)
 
