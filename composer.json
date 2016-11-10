@@ -26,6 +26,6 @@
     "scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit",
-        "docs": "apidoc -i src/FLAPI/ -o docs/ -c ./"
+        "rest-docs": "apidoc -i src/FLAPI/ -o docs/rest/ -c ./"
     }
 }
