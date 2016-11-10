@@ -26,6 +26,7 @@
     "scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
         "test": "phpunit",
-        "docs": "apidoc -i src/FLAPI/ -o docs/ -c ./"
+        "docs": "apidoc -i src/FLAPI/ -o docs/ -c ./",
+        "api-docs": "php bin/apigen.phar generate --template-theme bootstrap -s src/FLAPI/ -d docs/api/ --todo --php --annotation-groups final,api --access-levels public,private,protected"
     }
 }
