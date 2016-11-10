@@ -32,7 +32,7 @@
  * @apiExample {curl} Example usage:
  *     curl -i http://localhost:8080/sender/
  */
-$app->get('/sender', \FLAPI\SenderController::class . ':getSenderliste');
+$app->get('/sender', \FLAPI\ChannelController::class . ':getChannelList');
 
 /**
  * @api {get} /sender/:abbr?format=:format Request list of shows with this station

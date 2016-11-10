@@ -29,10 +29,10 @@ $container['db'] = function (\Interop\Container\ContainerInterface $container): 
     return $capsule;
 };
 
-// How a new SenderController should be made
-$container[\FLAPI\SenderController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\SenderController {
+// How a new ChannelController should be made
+$container[\FLAPI\ChannelController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\ChannelController {
     $db = $c->get('db');
-    return new \FLAPI\SenderController($c, $db);
+    return new \FLAPI\ChannelController($c, $db);
 };
 
 // How a new SendungController should be made
