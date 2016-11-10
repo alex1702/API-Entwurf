@@ -4,12 +4,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @class SendungController
+ * @class ShowController
  * @author Alexander Jank <himself@alexanderjank.de>
  * @license GNU GPL v3.0
  * @package FLAPI
  */
-class SendungController {
+class ShowController {
 
 	/**
 	 * @var \Interop\Container\ContainerInterface
@@ -56,7 +56,7 @@ class SendungController {
 	 * @param array $args
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function getSenderAllData(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	public function getChannelAllShows(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$queryParams = $request->getQueryParams();
 		if(!isset($queryParams['format'])) {
 			$format = "json";
@@ -89,7 +89,7 @@ class SendungController {
 	 * @param array $args
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function getSenderSpecialData(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	public function getChannelNarrowdShows(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$queryParams = $request->getQueryParams();
 		if(!isset($queryParams['format'])) {
 			$format = "json";

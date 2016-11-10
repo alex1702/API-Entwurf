@@ -35,8 +35,8 @@ $container[\FLAPI\ChannelController::class] = function (\Interop\Container\Conta
     return new \FLAPI\ChannelController($c, $db);
 };
 
-// How a new SendungController should be made
-$container[\FLAPI\SendungController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\SendungController {
+// How a new ShowController should be made
+$container[\FLAPI\ShowController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\ShowController {
     $db = $c->get('db');
-    return new \FLAPI\SendungController($c, $db);
+    return new \FLAPI\ShowController($c, $db);
 };
