@@ -4,12 +4,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * @class SenderController
+ * @class ChannelController
  * @author Alexander Jank <himself@alexanderjank.de>
  * @license GNU GPL v3.0
  * @package FLAPI
  */
-class SenderController {
+class ChannelController {
 
 	/**
 	 * @var \Interop\Container\ContainerInterface
@@ -56,7 +56,7 @@ class SenderController {
 	 * @param array $args
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function getSenderliste(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	public function getChannelList(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$queryParams = $request->getQueryParams();
 		if(!isset($queryParams['format'])) {
 			$format = "json";
