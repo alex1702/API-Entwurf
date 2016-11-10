@@ -11,9 +11,9 @@ composer start
 ## Documentation
 ```
 npm install apidoc -g
-composer docs
+composer rest-docs
 ```
-Docs werden dann in `docs/` gespeichert.
+Docs werden dann in `docs/rest/` gespeichert.
 
 [localhost:8080](http://localhost:8080/MediathekView)
 
