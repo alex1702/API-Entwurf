@@ -72,7 +72,7 @@ class ChannelController {
 		if($format == "json") {
 			return $response->withJSON($senderData, 200);
 		} else {
-			throw new \Exception('Data format not available!');
+			throw new DataFormatException('Data format not available!');
 		}
 	}
 }

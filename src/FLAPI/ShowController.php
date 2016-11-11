@@ -65,7 +65,7 @@ class ShowController {
 		}
 		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
 		if(!isset($senderId[0]->id)) {
-			throw new \Exception('Sender not found!');
+			throw new SenderNotFoundException('Sender not found!');
 		}
 		$sendungen = $this->sendungenTable->where('sender', '=', $senderId[0]->id)->get(['title', 'date', 'length', 'id'])->toArray();
 		foreach($sendungen as &$sendung) {
@@ -77,7 +77,7 @@ class ShowController {
 		if($format == "json") {
 			return $response->withJSON($sendungen, 200);
 		} else {
-			throw new \Exception('Data format not available!');
+			throw new DataFormatException('Data format not available!');
 		}
 	}
 
@@ -98,7 +98,7 @@ class ShowController {
 		}
 		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
 		if(!isset($senderId[0]->id)) {
-			throw new \Exception('Sender not found!');
+			throw new SenderNotFoundException('Sender not found!');
 		}
 		list($start, $end) = $this->parseTimeframe($args['timeframe']);
 		$sqlStart = date("Y-m-d H:i:s", $start);
@@ -113,7 +113,7 @@ class ShowController {
 		if($format == "json") {
 			return $response->withJSON($sendungen, 200);
 		} else {
-			throw new \Exception('Data format not available!');
+			throw new DataFormatException('Data format not available!');
 		}
 	}
 
