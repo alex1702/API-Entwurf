@@ -65,7 +65,7 @@ class ShowController {
 		}
 		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
 		if(!isset($senderId[0]->id)) {
-			throw new SenderNotFoundException('Sender not found!');
+			throw new ChannelNotFoundException('Sender not found!');
 		}
 		$sendungen = $this->sendungenTable->where('sender', '=', $senderId[0]->id)->get(['title', 'date', 'length', 'id'])->toArray();
 		foreach($sendungen as &$sendung) {
@@ -98,7 +98,7 @@ class ShowController {
 		}
 		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
 		if(!isset($senderId[0]->id)) {
-			throw new SenderNotFoundException('Sender not found!');
+			throw new ChannelNotFoundException('Sender not found!');
 		}
 		list($start, $end) = $this->parseTimeframe($args['timeframe']);
 		$sqlStart = date("Y-m-d H:i:s", $start);
