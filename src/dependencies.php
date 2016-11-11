@@ -30,8 +30,8 @@ $container['db'] = function (\Interop\Container\ContainerInterface $container): 
 };
 
 $container['errorHandler'] = function (\Interop\Container\ContainerInterface $c): Callable {
-	$reflect = new ReflectionClass($exception);
-	return function ($request, $response, $exception) use ($c, $reflect): Psr\Http\Message\ResponseInterface {
+	return function ($request, $response, $exception) use ($c): Psr\Http\Message\ResponseInterface {
+		$reflect = new ReflectionClass($exception);
 		return $c['response']->withStatus(500)
 							 ->withJson(['error' => $reflect->getShortName(), 'message' => $exception->getMessage()]);
 	};
