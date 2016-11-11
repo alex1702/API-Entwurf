@@ -83,12 +83,12 @@ $app->get('/sender', \FLAPI\ChannelController::class . ':getChannelList');
  *       "error": "DataFormatException"
  *     }
  *
- * @apiError SenderNotFoundException The sender you were looking for was not found!
+ * @apiError ChannelNotFoundException The sender you were looking for was not found!
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "SenderNotFoundException"
+ *       "error": "ChannelNotFoundException"
  *     }
  *
  * @apiExample {curl} Example usage:
@@ -150,12 +150,12 @@ $app->get('/sender/{abbr}', \FLAPI\ShowController::class . ':getChannelAllShows'
  *       "error": "DataFormatException"
  *     }
  *
- * @apiError SenderNotFoundException The sender you were looking for was not found!
+ * @apiError ChannelNotFoundException The sender you were looking for was not found!
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "SenderNotFoundException"
+ *       "error": "ChannelNotFoundException"
  *     }
  *
  * @apiExample {curl} Example usage:
