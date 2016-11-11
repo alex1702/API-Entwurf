@@ -4,15 +4,15 @@
 /**
  * @api {get} /sender?format=:format Request list of available stations
  * @apiVersion 0.1.0
- * @apiName GetAvailableStations
+ * @apiName GetChannelList
  * @apiGroup Stations
  *
  * @apiParam {String} format The format you wish to receive the data in [json, xml]
  *
- * @apiSuccess {Object[]} sender The stations details
- * @apiSuccess {String} sender.name  Full name of the station
- * @apiSuccess {String} sender.abbr Abbreviation for the stations name
- * @apiSuccess {String} sender.url URL to GET the full list of shows on that station
+ * @apiSuccess {Object[]} station The stations details
+ * @apiSuccess {String} station.name  Full name of the station
+ * @apiSuccess {String} station.abbr Abbreviation for the stations name
+ * @apiSuccess {String} station.url URL to GET the full list of shows on that station
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -37,19 +37,19 @@ $app->get('/sender', \FLAPI\ChannelController::class . ':getChannelList');
 /**
  * @api {get} /sender/:abbr?format=:format Request list of shows with this station
  * @apiVersion 0.1.0
- * @apiName GetAllStationShows
+ * @apiName GetChannelAllShows
  * @apiGroup Shows
  *
  * @apiParam {String} abbr The abbreviation of the station's name
  * @apiParam {String} format The format you wish to receive the data in [json, xml]
  *
- * @apiSuccess {Object[]} sendung The stations details
- * @apiSuccess {String} sendung.title  The shows title
- * @apiSuccess {Number} sendung.date  Unix timestamp of the date and time when it was broadcast
- * @apiSuccess {Number} sendung.length  The show's length in seconds
- * @apiSuccess {Object[]} sendung.download  The download links for this show
- * @apiSuccess {String} sendung.download.url  The URL for this download
- * @apiSuccess {String} sendung.download.quality  The quality of this download link [SD, HQ, HD]
+ * @apiSuccess {Object[]} show The stations details
+ * @apiSuccess {String} show.title  The shows title
+ * @apiSuccess {Number} show.date  Unix timestamp of the date and time when it was broadcast
+ * @apiSuccess {Number} show.length  The show's length in seconds
+ * @apiSuccess {Object[]} show.download  The download links for this show
+ * @apiSuccess {String} show.download.url  The URL for this download
+ * @apiSuccess {String} show.download.quality  The quality of this download link [SD, HQ, HD]
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -99,7 +99,7 @@ $app->get('/sender/{abbr}', \FLAPI\ShowController::class . ':getChannelAllShows'
 /**
  * @api {get} /sender/:abbr/:timeframe?format=:format Request specific list of shows on this station
  * @apiVersion 0.1.0
- * @apiName GetSpecialStationShows
+ * @apiName GetChannelNarrowdShows
  * @apiGroup Shows
  *
  * @apiParam {String} abbr The abbreviation of the station's name
@@ -110,13 +110,13 @@ $app->get('/sender/{abbr}', \FLAPI\ShowController::class . ':getChannelAllShows'
  *
  * @apiParam {String} format The format you wish to receive the data in [json, xml]
  *
- * @apiSuccess {Object[]} sendung The stations details
- * @apiSuccess {String} sendung.title  The shows title
- * @apiSuccess {Number} sendung.date  Unix timestamp of the date and time when it was broadcast
- * @apiSuccess {Number} sendung.length  The show's length in seconds
- * @apiSuccess {Object[]} sendung.download  The download links for this show
- * @apiSuccess {String} sendung.download.url  The URL for this download
- * @apiSuccess {String} sendung.download.quality  The quality of this download link [SD, HQ, HD]
+ * @apiSuccess {Object[]} show The stations details
+ * @apiSuccess {String} show.title  The shows title
+ * @apiSuccess {Number} show.date  Unix timestamp of the date and time when it was broadcast
+ * @apiSuccess {Number} show.length  The show's length in seconds
+ * @apiSuccess {Object[]} show.download  The download links for this show
+ * @apiSuccess {String} show.download.url  The URL for this download
+ * @apiSuccess {String} show.download.quality  The quality of this download link [SD, HQ, HD]
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
