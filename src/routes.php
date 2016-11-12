@@ -94,7 +94,7 @@ $app->get('/sender', \FLAPI\ChannelController::class . ':getChannelList');
  * @apiExample {curl} Example usage:
  *     curl -i http://localhost:8080/sender/zdfneo
  */
-$app->get('/sender/{abbr}', \FLAPI\ShowController::class . ':getChannelAllShows')->setName('senderFull');
+$app->get('/sender/{abbr}', \FLAPI\ChannelController::class . ':getChannelAllShows')->setName('senderFull');
 
 /**
  * @api {get} /sender/:abbr/:timeframe?format=:format Request specific list of shows on this station
@@ -165,4 +165,4 @@ $app->get('/sender/{abbr}', \FLAPI\ShowController::class . ':getChannelAllShows'
  *     curl -i http://localhost:8080/sender/zdfneo/1476981606t1478709606
  *
  */
-$app->get('/sender/{abbr}/{timeframe}', \FLAPI\ShowController::class . ':getChannelNarrowdShows');
+$app->get('/sender/{abbr}/{timeframe}', \FLAPI\ChannelController::class . ':getChannelNarrowdShows');
