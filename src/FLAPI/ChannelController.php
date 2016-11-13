@@ -92,6 +92,89 @@ class ChannelController {
 	}
 
 	/**
+	 * Route-method for POST /sender
+	 *
+	 * @param \Psr\Http\Message\ServerRequestInterface $request
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 * @param array $args
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function addChannel(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+
+		$status = array();
+
+		$body = (object) $request->getParsedBody();
+		$abbr = $body->channel;
+		$name = $body->name;
+
+		if(($sender = $this->senderTable->where('abbr', $abbr)->first())) {
+
+			$status["success"] = false;
+			$status["message"] = "A Channel with abbr '$abbr' already exists.";
+			$response = $response->withStatus(400);
+
+			//$this->senderTable->where('id', $sender->id)->update(['name' => $name]);
+		}
+		else {
+
+			$status["id"] = $this->senderTable->insertGetId([
+				'abbr' => $abbr,
+				'name' => $name
+			]);
+
+			$status["success"]= true;
+			$status["message"]= "Channel '$name'@'$abbr' successfully created.";
+
+
+			$response = $response->withHeader('Location', $this->ci->get('router')->pathFor('senderFull', ['abbr' => $abbr]));
+			$response = $response->withStatus(301);
+		}
+
+		return $this->ci->dataFormatter->format($response, $status, $request->getAttribute('format'));
+	}
+
+	/**
+	 * Route-method for PUT /sender/{abbr}
+	 *
+	 * @param \Psr\Http\Message\ServerRequestInterface $request
+	 * @param \Psr\Http\Message\ResponseInterface $response
+	 * @param array $args
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function addReplaceChannel(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+
+		$body = (object) $request->getParsedBody();
+		$name = $body->name;
+
+		$abbr = $args['abbr'];
+
+		if(($sender = $this->senderTable->where('abbr', $abbr)->first())) {
+
+			$this->senderTable->where('id', $sender->id)->update(['name' => $name]);
+
+			$status["success"] = true;
+			$status["replaced"] = true;
+			$status["message"] = "Channel with abbr '{$sender->abbr}'@'$abbr' successfully replaced with '$name'@'$abbr'.";
+		}
+		else {
+
+			$status["id"] = $this->senderTable->insertGetId([
+				'abbr' => $abbr,
+				'name' => $name
+			]);
+
+			$status["success"]= true;
+			$status["created"]= true;
+			$status["message"]= "Channel '$name'@'$abbr' successfully created.";
+
+
+		}
+
+		return $this->ci->dataFormatter->format($response, $status, $request->getAttribute('format'));
+
+	}
+
+	/**
 	 * Route-method for /sender/{abbr}/{timeframe}
 	 *
 	 * @param \Psr\Http\Message\ServerRequestInterface $request
