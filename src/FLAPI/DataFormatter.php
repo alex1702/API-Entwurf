@@ -23,7 +23,7 @@ class DataFormatter {
         switch($format){
 
         case "json":
-            return $response->withJSON($data, 200);
+            return $response->withJSON($data);
 
         case "yumyum":
             $response->write("YUM YUM DATA YUM YUM");
