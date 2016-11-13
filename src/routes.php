@@ -36,6 +36,13 @@ $app->get('/sender', \FLAPI\ChannelController::class . ':getChannelList');
 
 $app->post('/sender', \FLAPI\ChannelController::class . ':addChannel')->setName('addChannel');
 
+$app->put('/sender', function($request, $response, $args){
+
+	// PUT here is not implemented. (yet?)
+	return $response->withStatus(501);
+
+})->setName('addReplaceAllChannels');
+
 /**
  * @api {get} /sender/:abbr?format=:format Request list of shows with this station
  * @apiVersion 0.1.0
@@ -97,6 +104,8 @@ $app->post('/sender', \FLAPI\ChannelController::class . ':addChannel')->setName(
  *     curl -i http://localhost:8080/sender/zdfneo
  */
 $app->get('/sender/{abbr}', \FLAPI\ChannelController::class . ':getChannelAllShows')->setName('senderFull');
+
+$app->put('/sender/{abbr}', \FLAPI\ChannelController::class . ':addReplaceChannel')->setName('addReplaceChannel');
 
 $app->post('/sender/{abbr}', function($request, $response, $args){
 
