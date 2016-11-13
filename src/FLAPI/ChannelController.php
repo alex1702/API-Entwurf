@@ -57,23 +57,14 @@ class ChannelController {
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function getChannelList(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$queryParams = $request->getQueryParams();
-		if(!isset($queryParams['format'])) {
-			$format = "json";
-		} else {
-			$format = $queryParams['format'];
-		}
 		$senderData = $this->senderTable->get(['name', 'abbr'])->toArray();
 		foreach($senderData as &$sender) {
 			$sender->url = $this->ci->get('router')->pathFor('senderFull', [
 				'abbr' => $sender->abbr
 			]);
 		}
-		if($format == "json") {
-			return $response->withJSON($senderData, 200);
-		} else {
-			throw new DataFormatException('Data format not available!');
-		}
+
+		return $this->ci->dataFormatter->format($response, $senderData, $request->getAttribute('format'));
 	}
 
 	/**
@@ -85,12 +76,6 @@ class ChannelController {
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function getChannelAllShows(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$queryParams = $request->getQueryParams();
-		if(!isset($queryParams['format'])) {
-			$format = "json";
-		} else {
-			$format = $queryParams['format'];
-		}
 		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
 		if(!isset($senderId[0]->id)) {
 			throw new ChannelNotFoundException('Sender not found!');
@@ -102,11 +87,8 @@ class ChannelController {
 			$sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
 			unset($sendung->id);
 		}
-		if($format == "json") {
-			return $response->withJSON($sendungen, 200);
-		} else {
-			throw new DataFormatException('Data format not available!');
-		}
+
+		return $this->ci->dataFormatter->format($response, $sendungen, $request->getAttribute('format'));
 	}
 
 	/**
@@ -118,12 +100,6 @@ class ChannelController {
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
 	public function getChannelNarrowdShows(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$queryParams = $request->getQueryParams();
-		if(!isset($queryParams['format'])) {
-			$format = "json";
-		} else {
-			$format = $queryParams['format'];
-		}
 		$senderId = $this->senderTable->where('abbr', '=', $args['abbr'])->get(['id'])->toArray();
 		if(!isset($senderId[0]->id)) {
 			throw new ChannelNotFoundException('Sender not found!');
@@ -138,11 +114,8 @@ class ChannelController {
 			$sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
 			unset($sendung->id);
 		}
-		if($format == "json") {
-			return $response->withJSON($sendungen, 200);
-		} else {
-			throw new DataFormatException('Data format not available!');
-		}
+
+		return $this->ci->dataFormatter->format($response, $sendungen, $request->getAttribute('format'));
 	}
 
 	/**

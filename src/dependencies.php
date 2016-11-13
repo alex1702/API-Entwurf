@@ -37,6 +37,11 @@ $container['errorHandler'] = function (\Interop\Container\ContainerInterface $c)
 	};
 };
 
+// Data Formatter
+$container['dataFormatter'] = function ($c) {
+    return new \FLAPI\DataFormatter();
+};
+
 // How a new ChannelController should be made
 $container[\FLAPI\ChannelController::class] = function (\Interop\Container\ContainerInterface $c): \FLAPI\ChannelController {
 	$db = $c->get('db');
