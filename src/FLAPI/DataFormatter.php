@@ -11,13 +11,13 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class DataFormatter {
 
-	/**
-	 * Formats the data as requested by ?format=:format
-	 *
-	 * @param \Psr\Http\Message\ResponseInterface $response
-	 * @param mixed $data the data to format
-	 * @return \Psr\Http\Message\ResponseInterface
-	 */
+    /**
+     * Formats the data as requested by ?format=:format
+     *
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param mixed $data the data to format
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function format(ResponseInterface $response, $data, $format) : ResponseInterface {
 
         switch($format){
@@ -30,7 +30,7 @@ class DataFormatter {
             return $response;
 
         default:
-			throw new DataFormatException('Data format not available!');
+            throw new DataFormatException('Data format not available!');
         }
     }
 
