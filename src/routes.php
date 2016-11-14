@@ -104,9 +104,9 @@ $app->get('/sender/{abbr}', \FLAPI\ChannelController::class . ':getChannelAllSho
  *
  * @apiParam {String} abbr The abbreviation of the station's name
  * @apiParam {String} timeframe The timeframe you want to get the data in.
- * 		Formats:
- *   		- Timestamp (start-timestamp)t(end-timestamp)
- *     		- Days (number of days in past)d(number of days in the future)
+ *         Formats:
+ *           - Timestamp (start-timestamp)t(end-timestamp)
+ *             - Days (number of days in past)d(number of days in the future)
  *
  * @apiParam {String} format The format you wish to receive the data in [json, xml]
  *
