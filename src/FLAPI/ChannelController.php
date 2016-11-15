@@ -114,6 +114,8 @@ class ChannelController {
             $response = $response->withStatus(400);
 
             //$this->senderTable->where('id', $sender->id)->update(['name' => $name]);
+
+            // Go to return
         }
         else {
 
@@ -128,6 +130,8 @@ class ChannelController {
 
             $response = $response->withHeader('Location', $this->ci->get('router')->pathFor('senderFull', ['abbr' => $abbr]));
             $response = $response->withStatus(301);
+
+            // Go to return
         }
 
         return $this->ci->dataFormatter->format($response, $status, $request->getAttribute('format'));
@@ -155,6 +159,8 @@ class ChannelController {
             $status["success"] = true;
             $status["replaced"] = true;
             $status["message"] = "Channel with abbr '{$sender->abbr}'@'$abbr' successfully replaced with '$name'@'$abbr'.";
+
+            // Go to return
         }
         else {
 
@@ -167,6 +173,7 @@ class ChannelController {
             $status["created"]= true;
             $status["message"]= "Channel '$name'@'$abbr' successfully created.";
 
+            // Go to return
 
         }
 
