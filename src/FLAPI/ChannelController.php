@@ -176,12 +176,17 @@ class ChannelController {
 
             $sendung->download = array();
 
-            foreach($downloads as $download)
-                if(!isset($sendung->download[$download->quality]))
+            foreach($downloads as $download){
+
+                if(!isset($sendung->download[$download->quality])){
                     // Create array with element at key
                     $sendung->download[$download->quality] = array($download->url);
-                else
+                }
+                else {
                     // Push element to array at key
                     $sendung->download[$download->quality][] = $download->url;
+                }
+
+            }
     }
 }
