@@ -66,8 +66,11 @@ class ShowController {
 		$show = (object) $body->show;
 
 		if(($timestamp = strtotime($show->date)) === FALSE){
+
 			$status["success"] = false;
 			$status["message"] = "Unparsable date '". $show->date . "'";
+
+			// Go to return
 		}
 		else {
 
@@ -82,12 +85,16 @@ class ShowController {
 
 				$status["success"] = true;
 				$status["id"] = $id;
+
+				// Go to return
 			}
 			else {
 				$status["success"] = false;
 				$status["message"] = "No such channel '$abbr'!";
 
 				$response = $response->withStatus(404);
+
+				// Go to return
 			}
 		}
 
