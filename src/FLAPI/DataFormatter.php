@@ -30,7 +30,9 @@ class DataFormatter {
             return $response;
 
         default:
-            throw new DataFormatException('Data format not available!');
+            $response = $response->withHeader('Content-Type', 'text/plain');
+            $response->write("Data format '$format' not available!");
+            return $response;
         }
     }
 

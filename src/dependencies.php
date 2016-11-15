@@ -31,9 +31,13 @@ $container['db'] = function (\Interop\Container\ContainerInterface $container): 
 
 $container['errorHandler'] = function (\Interop\Container\ContainerInterface $c): Callable {
     return function ($request, $response, $exception) use ($c): Psr\Http\Message\ResponseInterface {
+
         $reflect = new ReflectionClass($exception);
-        return $c['response']->withStatus(500)
-                             ->withJson(['error' => $reflect->getShortName(), 'message' => $exception->getMessage()]);
+        $queryParams = $request->getQueryParams();
+
+        $status = ['error' => $reflect->getShortName(), 'message' => $exception->getMessage()];
+
+        return $c['dataFormatter']->format($response->withStatus(500), $status, isset($queryParams['format']) ? $queryParams['format'] : 'json');
     };
 };
 
