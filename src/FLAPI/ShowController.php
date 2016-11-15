@@ -47,4 +47,52 @@ class ShowController {
         $this->downloadTable = $db->table('download');
         $this->db = $db;
     }
+
+    /**
+     * Route-method for POST /show
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param array $args
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function addShow(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+
+        $body = (object) $request->getParsedBody();
+        $status = array();
+        $showDate = null;
+
+        $abbr = $body->channel;
+        $show = (object) $body->show;
+
+        if(($timestamp = strtotime($show->date)) === FALSE){
+            $status["success"] = false;
+            $status["message"] = "Unparsable date '". $show->date . "'";
+        }
+        else {
+
+            if(($sender = $this->senderTable->where('abbr', $abbr)->first())){
+
+                $id = $this->sendungenTable->insertGetId([
+                    'title' => $show->title,
+                    'date' => date("Y-m-d H:i:s", $timestamp),
+                    'length' => $show->length,
+                    'sender' => $sender->id
+                ]);
+
+                $status["success"] = true;
+                $status["id"] = $id;
+            }
+            else {
+                $status["success"] = false;
+                $status["message"] = "No such channel '$abbr'!";
+
+                $response = $response->withStatus(404);
+            }
+        }
+
+        return $this->ci->dataFormatter($response, $status, $request->getAttribute('format'));
+
+    }
+
 }
