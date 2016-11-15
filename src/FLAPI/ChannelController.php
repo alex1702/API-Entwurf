@@ -84,7 +84,9 @@ class ChannelController {
         foreach($sendungen as &$sendung) {
             $sendung->date = strtotime($sendung->date);
             $sendung->length = $this->timeToSec($sendung->length);
-            $sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
+
+            $sendung = downloadsArray($sendung, $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']));
+
             unset($sendung->id);
         }
 
@@ -111,7 +113,9 @@ class ChannelController {
         foreach($sendungen as &$sendung) {
             $sendung->date = strtotime($sendung->date);
             $sendung->length = $this->timeToSec($sendung->length);
-            $sendung->download = $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']);
+
+            $sendung = downloadsArray($sendung, $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']));
+
             unset($sendung->id);
         }
 
@@ -158,5 +162,26 @@ class ChannelController {
             break;
         }
         return [(int) $start, (int) $end];
+    }
+
+    /**
+     * Method for generating downloads array for a show
+     *
+     * @param sendung the show to add the downloads to
+     * @param downloads the downloads to add
+     *
+     * @return sendung the new sendung with the downloads added
+     */
+    private function downloadsArray($sendung, $downloads){
+
+            $sendung->download = array();
+
+            foreach($downloads as $download)
+                if(!isset($sendung->download[$download->quality]))
+                    // Create array with element at key
+                    $sendung->download[$download->quality] = array($download->url);
+                else
+                    // Push element to array at key
+                    $sendung->download[$download->quality][] = $download->url;
     }
 }
