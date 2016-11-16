@@ -85,7 +85,7 @@ class ChannelController {
             $sendung->date = strtotime($sendung->date);
             $sendung->length = $this->timeToSec($sendung->length);
 
-            $sendung = downloadsArray($sendung, $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']));
+            $sendung = $this->downloadsArray($sendung, $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']));
 
             unset($sendung->id);
         }
@@ -204,7 +204,7 @@ class ChannelController {
             $sendung->date = strtotime($sendung->date);
             $sendung->length = $this->timeToSec($sendung->length);
 
-            $sendung = downloadsArray($sendung, $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']));
+            $sendung = $this->downloadsArray($sendung, $this->downloadTable->where('sendung', '=', $sendung->id)->get(['url', 'quality']));
 
             unset($sendung->id);
         }
@@ -278,5 +278,7 @@ class ChannelController {
                 }
 
             }
+
+            return $sendung;
     }
 }
