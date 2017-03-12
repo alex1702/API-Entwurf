@@ -1,14 +1,8 @@
-# FLAPI
-(Entwurf) API zur Filmliste
+
+
 ```
-git clone git@github.com:mediathekview/FLAPI.git FLAPI
+git clone git@github.com:alex1702/API-Entwurf.git
 cd FLAPI
 composer install
 composer start
 ```
-
-[localhost:8080](http://localhost:8080/MediathekView)
-
-![Imgur](http://i.imgur.com/JwX3XEZ.png)
-
-[Brainstorming](https://pad.systemli.org/p/r.da3431b4433391bcdc477628a9550ced)
